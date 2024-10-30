@@ -1,0 +1,14 @@
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\bin\Debug\net8.0\JsonParserConsole.exe
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\bin\Debug\net8.0\JsonParserConsole.deps.json
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\bin\Debug\net8.0\JsonParserConsole.runtimeconfig.json
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\bin\Debug\net8.0\JsonParserConsole.dll
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\bin\Debug\net8.0\JsonParserConsole.pdb
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.AssemblyInfoInputs.cache
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.AssemblyInfo.cs
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.csproj.CoreCompileInputs.cache
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.dll
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\refint\JsonParserConsole.dll
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.pdb
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\JsonParserConsole.genruntimeconfig.cache
+C:\Users\eLaptop\source\repos\JsonParserConsole\JsonParserConsole\obj\Debug\net8.0\ref\JsonParserConsole.dll
