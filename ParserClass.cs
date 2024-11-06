@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Numerics;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,7 +11,7 @@ namespace ParserClass
 		{
 			try
 			{
-			    HttpResponseMessage response = await client.GetAsync(url);
+				HttpResponseMessage response = await client.GetAsync(url);
 				response.EnsureSuccessStatusCode();
 				string responseBody = await response.Content.ReadAsStringAsync();
 				return responseBody;
@@ -46,27 +39,36 @@ namespace ParserClass
 		public string? avatar { get; set; }
 		public string? feature_stat { get; set; }
 		public int rating { get; set; }
-		public string country { get; set; }
+		public string? country { get; set; }
 	}
 	internal class JsonParser
 	{
-		public static async Task<string> GetCountry(string player,int gateway_id)
+		public static async Task<string> GetCountry(string player, int gateway_id)
 		{
-			var json = await HttpRequest.GetRequest($"http://127.0.0.1:49530/web-api/v2/aurora-profile-by-toon/{player}/{gateway_id}?request_flags=scr_profile");
+			await Task.Delay(Settings.DelayInMs);
+			var json = await HttpRequest.GetRequest($"http://127.0.0.1:{Settings.Port}/web-api/v2/aurora-profile-by-toon/{player}/{gateway_id}?request_flags=scr_profile");
 			var jsonDoc = JsonDocument.Parse(json);
 			var country = jsonDoc.RootElement.GetProperty("country_code");
 			return country.ToString();
 		}
-		public static async Task<List<Player>> AddPlayersAsync()
+		public static async Task<List<Player>> GetPlayersAsync(int offset)
 		{
-			var json = await HttpRequest.GetRequest("http://127.0.0.1:49530/web-api/v1/leaderboard/12966?offset=0&length=5");
+			await Task.Delay(Settings.DelayInMs);
+
+			var json = await HttpRequest.GetRequest($"http://127.0.0.1:{Settings.Port}/web-api/v1/leaderboard/{Settings.LeaderboardId}?offset={offset}&length={Settings.BatchSize}");
 			var jsonDoc = JsonDocument.Parse(json);
 			var rows = jsonDoc.RootElement.GetProperty("rows");
 			List<Player> players = new List<Player>();
 
 			foreach (var row in rows.EnumerateArray())
 			{
-				players.Add(new Player
+				var _country = "";
+				try
+				{
+					_country = await GetCountry(row[7].GetString(), row[2].GetInt32());
+				}
+				catch { }
+				var player = new Player
 				{
 					rank = row[0].GetInt32(),
 					last_rank = row[1].GetInt32(),
@@ -80,12 +82,16 @@ namespace ParserClass
 					avatar = row[9].GetString(),
 					feature_stat = row[10].GetString(),
 					rating = row[11].GetInt32(),
-					country = await GetCountry(row[7].GetString(),row[2].GetInt32()),
-				});
+					country = _country,
+				};
+				players.Add(player);
+				Console.WriteLine($"Rank: {player.rank}, Last Rank: {player.last_rank}, Gateway ID: {player.gateway_id}, Points: {player.points}, Wins: {player.wins}, " +
+								  $"Loses: {player.loses}, Disconnects: {player.dissconects}, Toon: {player.toon}, Battletag: {player.battletag}, " +
+								  $"Avatar: {player.avatar}, Feature Stat: {player.feature_stat}, Rating: {player.rating},Country:{player.country}");
 			}
 			return players;
 		}
 	}
 }
-	
+
 

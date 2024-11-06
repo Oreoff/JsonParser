@@ -1,11 +1,13 @@
 ﻿using ParserClass;
-
-
-
-List<Player> players = await JsonParser.AddPlayersAsync();
-foreach (var player in players)
+var newPlayers = new List<Player>();
+var batchNumber = Settings.StartBatchNumber;
+do
 {
-	Console.WriteLine($"Rank: {player.rank}, Last Rank: {player.last_rank}, Gateway ID: {player.gateway_id}, Points: {player.points}, Wins: {player.wins}, " +
-					  $"Loses: {player.loses}, Disconnects: {player.dissconects}, Toon: {player.toon}, Battletag: {player.battletag}, " +
-					  $"Avatar: {player.avatar}, Feature Stat: {player.feature_stat}, Rating: {player.rating},Country:{player.country}");
-}
+	newPlayers = await JsonParser.GetPlayersAsync(Settings.BatchSize * batchNumber);
+	batchNumber++;
+	var strings = newPlayers.Select(x =>
+		$"{x.rank},{x.last_rank},{x.gateway_id},{x.points},{x.wins},{x.loses},{x.dissconects},{x.toon},{x.battletag},{x.avatar},{x.feature_stat},{x.rating},{x.country}"
+	).ToList();
+
+	await File.AppendAllLinesAsync(Settings.OutputFilePath, strings);
+} while (newPlayers.Any());
